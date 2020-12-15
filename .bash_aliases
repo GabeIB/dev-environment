@@ -1,0 +1,5 @@
+alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
+alias fu='git rebase -i $(git rev-parse master)'
+alias ngrok='~/Downloads/ngrok http -subdomain back-dev 127.0.0.1:8080'
+alias http-start='ENV=localhost ./target/linux/amd64/berghain server http 8080'
+alias grpc-start='ENV=localhost ./target/linux/amd64/berghain server grpc 8090'

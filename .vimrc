@@ -68,6 +68,9 @@ set number
 " Case insensitive search
 set smartcase
 
+" Yank and paste from system clipboard
+set clipboard=unnamedplus
+
 " My settings when editing *.txt files
 "   - automatically indent lines according to previous lines
 "   - replace tab with 8 spaces
@@ -110,12 +113,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'scrooloose/nerdtree'
 
     " CoC
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     Plug 'vim-jp/vim-go-extra', {'branch': 'master'}
 
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
+
+    Plug 'pangloss/vim-javascript'    " JavaScript support
+    Plug 'leafgarland/typescript-vim' " TypeScript syntax
+    Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+    Plug 'jparise/vim-graphql'        " GraphQL syntax
 
     " " All of your Plugins must be added before the following line
     call plug#end()
@@ -132,6 +140,8 @@ let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 " gopls
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
+
+"nerdtree
 
 " -----------Buffer Management---------------
 set hidden " Allow buffers to be hidden if you've modified a buffer
@@ -158,6 +168,8 @@ noremap <silent> <Down> :wincmd j <CR>
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
+" typescript server for coc-vim
+let g:coc_global_extensions = [ 'coc-tsserver' ]
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -197,6 +209,10 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <C-k> :FZF<CR>
 
+" jump to next error
+nmap <silent> <C-H> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-L> <Plug>(coc-diagnostic-next)
+
 " Use U to show documentation in preview window
 nnoremap <silent> U :call <SID>show_documentation()<CR>
 
@@ -223,6 +239,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+
 " -----------END-----------------------
 
 " Use the nearest .git|.svn|.hg|.bzr directory as the cwd
@@ -230,12 +247,13 @@ let g:ctrlp_working_path_mode = 'r'
 nmap <leader>p :CtrlP<cr>  " enter file search mode
 
 " Nerdtree
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <C-n> :NERDTreeToggle<CR>  " open and close file tree
 nmap <leader>n :NERDTreeFind<CR>  " open current buffer in file tree
+"autocmd VimEnter * :NERDTreeToggle
 
 " file params
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
@@ -245,3 +263,4 @@ autocmd FileType go autocmd BufWritePre <buffer> silent call CocAction('format')
 autocmd FileType tf set et ts=2 sw=2 autoindent
 autocmd FileType yaml set et ts=2 sw=2
 autocmd FileType go set et ts=4 sw=4
+autocmd FileType ts set et ts=2 sw=2

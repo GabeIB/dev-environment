@@ -8,6 +8,8 @@ case $- in
       *) return;;
 esac
 
+PATH=$PATH:$HOME/go/bin
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -92,6 +94,8 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+source ~/.bash_aliases
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -105,6 +109,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# see repo status in bash prompt
+source ~/.git-prompt.sh
+PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$'
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -115,3 +123,5 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

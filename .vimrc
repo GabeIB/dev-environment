@@ -125,6 +125,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
     Plug 'jparise/vim-graphql'        " GraphQL syntax
 
+    Plug 'sophacles/vim-processing'   " processing syntax
+
     " " All of your Plugins must be added before the following line
     call plug#end()
 
@@ -164,6 +166,10 @@ nnoremap <silent> <Right> :wincmd l <CR>
 nnoremap <silent> <Left> :wincmd h <CR>
 noremap <silent> <Up> :wincmd k <CR>
 noremap <silent> <Down> :wincmd j <CR>
+
+" none of that cut bullshit (why is that a default feature)
+nnoremap d "_d
+vnoremap d "_d
 
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
@@ -263,4 +269,5 @@ autocmd FileType go autocmd BufWritePre <buffer> silent call CocAction('format')
 autocmd FileType tf set et ts=2 sw=2 autoindent
 autocmd FileType yaml set et ts=2 sw=2
 autocmd FileType go set et ts=4 sw=4
+autocmd FileType pde set et ts=4 sw=4
 autocmd FileType ts set et ts=2 sw=2
